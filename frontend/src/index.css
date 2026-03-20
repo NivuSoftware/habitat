@@ -1,0 +1,56 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 220 33% 98%;
+  --foreground: 225 44% 14%;
+  --card: 0 0% 100%;
+  --card-foreground: 225 44% 14%;
+  --primary: 222 82% 56%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 217 42% 95%;
+  --secondary-foreground: 225 44% 14%;
+  --muted: 217 39% 94%;
+  --muted-foreground: 218 19% 48%;
+  --accent: 213 100% 67%;
+  --accent-foreground: 225 44% 14%;
+  --border: 216 33% 88%;
+}
+
+body {
+  background:
+    radial-gradient(circle at top, rgba(59, 130, 246, 0.1), transparent 28%),
+    linear-gradient(180deg, #f8fbff 0%, #eef4fb 100%);
+  color: hsl(var(--foreground));
+  font-family: "ui-sans-serif", "system-ui", sans-serif;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+html {
+  scroll-behavior: auto;
+}
+
+.ProseMirror ul {
+  list-style: disc;
+  padding-left: 1.5rem;
+  margin: 1rem 0;
+}
+
+.ProseMirror ol {
+  list-style: decimal;
+  padding-left: 1.5rem;
+  margin: 1rem 0;
+}
+
+.ProseMirror li {
+  display: list-item;
+  margin: 0.35rem 0;
+}
+
+.ProseMirror li::marker {
+  color: #2563eb;
+}
