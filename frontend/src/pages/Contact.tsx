@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Phone, Mail, MapPin, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,12 +7,80 @@ import Layout from "@/components/Layout";
 import SectionReveal from "@/components/SectionReveal";
 import { useToast } from "@/hooks/use-toast";
 
+const API_URL = `${(import.meta.env.VITE_API_URL || "http://localhost:5000/api").replace(/\/$/, "")}/send-email`;
+
 const ContactPage = () => {
   const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState({
+    nombre: "",
+    email: "",
+    empresa: "",
+    mensaje: "",
+  });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleChange = (field: keyof typeof formData) => (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    setFormData((current) => ({ ...current, [field]: e.target.value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    toast({ title: "Mensaje enviado", description: "Nos pondremos en contacto contigo muy pronto." });
+
+    try {
+      setIsSubmitting(true);
+      const payload = {
+        nombre: formData.nombre.trim(),
+        email: formData.email.trim(),
+        empresa: formData.empresa.trim(),
+        mensaje: formData.mensaje.trim(),
+      };
+
+      if (!payload.nombre || !payload.email || !payload.mensaje) {
+        throw new Error("Completa los campos obligatorios antes de enviar.");
+      }
+
+      const response = await fetch(API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        let errorMessage = "No se pudo enviar tu mensaje. Intenta nuevamente en unos minutos.";
+
+        try {
+          const errorData = await response.json();
+          errorMessage = errorData.message || errorMessage;
+        } catch {
+          // Mantiene el mensaje por defecto si la respuesta no es JSON.
+        }
+
+        throw new Error(errorMessage);
+      }
+
+      setFormData({
+        nombre: "",
+        email: "",
+        empresa: "",
+        mensaje: "",
+      });
+
+      toast({
+        title: "Mensaje enviado",
+        description: "Nos pondremos en contacto contigo muy pronto.",
+      });
+    } catch (error) {
+      toast({
+        title: "No se pudo enviar el mensaje",
+        description: error instanceof Error ? error.message : "Ocurrió un error inesperado.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -31,23 +100,57 @@ const ContactPage = () => {
                 <div className="grid sm:grid-cols-2 gap-6">
                   <div>
                     <label className="text-sm font-medium text-foreground mb-2 block">Nombre</label>
-                    <Input placeholder="Tu nombre" required className="rounded-lg" />
+                    <Input
+                      name="nombre"
+                      placeholder="Tu nombre"
+                      value={formData.nombre}
+                      onChange={handleChange("nombre")}
+                      required
+                      className="rounded-lg"
+                    />
                   </div>
                   <div>
                     <label className="text-sm font-medium text-foreground mb-2 block">Email</label>
-                    <Input type="email" placeholder="tu@email.com" required className="rounded-lg" />
+                    <Input
+                      name="email"
+                      type="email"
+                      placeholder="tu@email.com"
+                      value={formData.email}
+                      onChange={handleChange("email")}
+                      required
+                      className="rounded-lg"
+                    />
                   </div>
                 </div>
                 <div>
                   <label className="text-sm font-medium text-foreground mb-2 block">Empresa</label>
-                  <Input placeholder="Nombre de tu empresa" className="rounded-lg" />
+                  <Input
+                    name="empresa"
+                    placeholder="Nombre de tu empresa"
+                    value={formData.empresa}
+                    onChange={handleChange("empresa")}
+                    className="rounded-lg"
+                  />
                 </div>
                 <div>
                   <label className="text-sm font-medium text-foreground mb-2 block">Mensaje</label>
-                  <Textarea placeholder="¿En qué podemos ayudarte?" rows={6} required className="rounded-lg" />
+                  <Textarea
+                    name="mensaje"
+                    placeholder="¿En qué podemos ayudarte?"
+                    rows={6}
+                    value={formData.mensaje}
+                    onChange={handleChange("mensaje")}
+                    required
+                    className="rounded-lg"
+                  />
                 </div>
-                <Button type="submit" size="lg" className="rounded-lg w-full font-semibold">
-                  Enviar mensaje
+                <Button
+                  type="submit"
+                  size="lg"
+                  disabled={isSubmitting}
+                  className="rounded-lg w-full font-semibold"
+                >
+                  {isSubmitting ? "Enviando..." : "Enviar mensaje"}
                 </Button>
               </form>
             </SectionReveal>

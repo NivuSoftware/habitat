@@ -27,9 +27,9 @@ const values = [
 ];
 
 const clients = [
-  { icon: Rocket, label: "Emprendimientos" },
-  { icon: Store, label: "Pequeñas empresas" },
-  { icon: Factory, label: "Medianas empresas" },
+  { icon: Rocket, label: "Micro y Pequeñas empresas" },
+  { icon: Store, label: "Medianas empresas" },
+  { icon: Factory, label: "PyMes Medianas empresas" },
   { icon: HomeIcon, label: "Empresas familiares" },
 ];
 

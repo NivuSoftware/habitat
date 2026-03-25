@@ -9,7 +9,7 @@ const navItems = [
   { label: "Inicio", path: "/" },
   { label: "Quiénes Somos", path: "/quienes-somos" },
   { label: "Soluciones", path: "/soluciones" },
-  { label: "Trabaje con Nosotros", path: "/trabaje-con-nosotros" },
+  { label: "Bolsa de empleo", path: "/trabaje-con-nosotros" },
   { label: "Contáctenos", path: "/contactenos" },
 ];
 
