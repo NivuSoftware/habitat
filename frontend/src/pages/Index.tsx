@@ -81,6 +81,19 @@ const successCases = [
 
 const HomePage = () => {
   const heroRef = useRef(null);
+
+  const handleScrollToSuccessCases = () => {
+    const successCasesSection = document.getElementById("casos-de-exito");
+
+    if (!successCasesSection) return;
+
+    const offsetTop = successCasesSection.getBoundingClientRect().top + window.scrollY - 96;
+    window.scrollTo({
+      top: offsetTop,
+      behavior: "smooth",
+    });
+  };
+
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ["start start", "end end"],
@@ -158,12 +171,13 @@ const HomePage = () => {
                       <Link to="/contactenos">Solicita asesoría</Link>
                     </Button>
                     <Button
-                      asChild
                       variant="outline"
                       size="lg"
+                      type="button"
+                      onClick={handleScrollToSuccessCases}
                       className="rounded-lg text-sm font-semibold px-8 w-full sm:w-auto border-white/30 bg-white/8 text-white hover:bg-white/16 hover:text-white"
                     >
-                      <Link to="/soluciones">Ver casos de éxito</Link>
+                      Ver casos de éxito
                     </Button>
                   </div>
                 </motion.div>
@@ -210,6 +224,7 @@ const HomePage = () => {
       </section>
 
       <SuccessCasesSection
+        sectionId="casos-de-exito"
         title="Casos de éxito"
         subtitle="Ellos ya confían en nuestros servicios"
         items={successCases}

@@ -1,6 +1,18 @@
-import { Building2, Users, GraduationCap, Briefcase, Factory } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Building2, Users, GraduationCap, Briefcase, Factory, Volume2, VolumeX } from "lucide-react";
 import Layout from "@/components/Layout";
 import SectionReveal from "@/components/SectionReveal";
+import evidenceImage from "@/assets/evidence.jpeg";
+import evidenceImage1 from "@/assets/evidence1.jpeg";
+import evidenceImage2 from "@/assets/evidence2.jpeg";
+
+const HERO_VIDEO_SRC = "/videos/soluciones.mp4";
+const EVIDENCE_IMAGES = [
+  { src: evidenceImage, alt: "Evidencia de ejecución de soluciones empresariales 1" },
+  { src: evidenceImage1, alt: "Evidencia de ejecución de soluciones empresariales 2" },
+  { src: evidenceImage2, alt: "Evidencia de ejecución de soluciones empresariales 3" },
+];
 
 const services = [
   {
@@ -66,49 +78,191 @@ const services = [
   },
 ];
 
-const SolutionsPage = () => (
-  <Layout>
-    <section className="pt-32 pb-[12vh]">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <SectionReveal>
-          <p className="text-sm font-semibold text-primary uppercase tracking-wider mb-3">Soluciones</p>
-          <h1 className="text-hero font-bold text-foreground leading-[1.1] mb-6 max-w-3xl">
-            Servicios diseñados para escalar tu empresa.
-          </h1>
-          <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl">
-            Cada solución responde a necesidades reales del entorno empresarial ecuatoriano, adaptándose al tamaño y sector de tu organización.
-          </p>
-        </SectionReveal>
-      </div>
-    </section>
+const SolutionsPage = () => {
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const [isMuted, setIsMuted] = useState(true);
+  const [activeEvidenceIndex, setActiveEvidenceIndex] = useState(0);
 
-    <section className="pb-[16vh]">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 space-y-8">
-        {services.map((s) => (
-          <SectionReveal key={s.title} delay={0.05}>
-            <div className="bg-card rounded-xl border border-border shadow-corporate p-8 lg:p-12 grid lg:grid-cols-[auto_1fr_1fr] gap-8 items-start">
-              <div className="w-16 h-16 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
-                <s.icon className="w-8 h-8 text-primary" strokeWidth={1.5} />
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const attemptPlayback = () => {
+      video.playsInline = true;
+      video.muted = video.muted || isMuted;
+      const playback = video.play();
+
+      if (playback && typeof playback.catch === "function") {
+        playback.catch(() => {
+          // Keep the video ready and retry on the next user/browser signal.
+        });
+      }
+    };
+
+    const resumePlayback = () => {
+      if (document.visibilityState === "visible" && video.paused) {
+        attemptPlayback();
+      }
+    };
+
+    attemptPlayback();
+    video.addEventListener("loadeddata", attemptPlayback);
+    video.addEventListener("canplay", attemptPlayback);
+    video.addEventListener("pause", attemptPlayback);
+    document.addEventListener("visibilitychange", resumePlayback);
+    window.addEventListener("touchstart", attemptPlayback, { passive: true });
+    window.addEventListener("click", attemptPlayback);
+
+    return () => {
+      video.removeEventListener("loadeddata", attemptPlayback);
+      video.removeEventListener("canplay", attemptPlayback);
+      video.removeEventListener("pause", attemptPlayback);
+      document.removeEventListener("visibilitychange", resumePlayback);
+      window.removeEventListener("touchstart", attemptPlayback);
+      window.removeEventListener("click", attemptPlayback);
+    };
+  }, [isMuted]);
+
+  useEffect(() => {
+    const intervalId = window.setInterval(() => {
+      setActiveEvidenceIndex((currentIndex) => (currentIndex + 1) % EVIDENCE_IMAGES.length);
+    }, 3200);
+
+    return () => window.clearInterval(intervalId);
+  }, []);
+
+  const handleToggleMuted = () => {
+    const video = videoRef.current;
+    const nextMuted = !isMuted;
+
+    setIsMuted(nextMuted);
+
+    if (!video) return;
+
+    video.muted = nextMuted;
+    video.defaultMuted = nextMuted;
+    void video.play().catch(() => {
+      // If the browser blocks playback, the next interaction retries it.
+    });
+  };
+
+  return (
+    <Layout>
+      <section className="overflow-hidden pt-32 pb-[12vh]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1.15fr)_minmax(300px,380px)] lg:gap-16">
+            <SectionReveal>
+              <p className="text-sm font-semibold text-primary uppercase tracking-wider mb-3">Soluciones</p>
+              <h1 className="text-hero font-bold text-foreground leading-[1.1] mb-6 max-w-3xl">
+                Servicios diseñados para escalar tu empresa.
+              </h1>
+              <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl">
+                Cada solución responde a necesidades reales del entorno empresarial ecuatoriano, adaptándose al tamaño y sector de tu organización.
+              </p>
+            </SectionReveal>
+
+            <SectionReveal delay={0.1}>
+              <div className="relative mx-auto w-full max-w-[360px] overflow-hidden rounded-[2rem] border border-border/70 bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(241,245,255,0.94))] p-3 shadow-[0_24px_60px_rgba(37,99,235,0.12)] lg:ml-auto">
+                <div className="relative overflow-hidden rounded-[1.5rem] bg-[#081225]">
+                  <video
+                    ref={videoRef}
+                    src={HERO_VIDEO_SRC}
+                    autoPlay
+                    loop
+                    muted={isMuted}
+                    playsInline
+                    preload="auto"
+                    disablePictureInPicture
+                    controlsList="nodownload nofullscreen noremoteplayback"
+                    className="aspect-[9/16] w-full object-cover"
+                  />
+                  <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(8,18,37,0.06),rgba(8,18,37,0.18))]" />
+                  <button
+                    type="button"
+                    onClick={handleToggleMuted}
+                    aria-label={isMuted ? "Activar volumen del video" : "Silenciar video"}
+                    className="absolute bottom-4 right-4 inline-flex items-center gap-2 rounded-full border border-white/20 bg-[#081225]/80 px-4 py-2 text-sm font-medium text-white backdrop-blur transition-colors hover:bg-[#102344]"
+                  >
+                    {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
+                    {isMuted ? "Activar audio" : "Silenciar"}
+                  </button>
+                </div>
               </div>
-              <div>
-                <h3 className="text-xl font-bold text-foreground mb-2">{s.title}</h3>
-                <p className="text-muted-foreground leading-relaxed">{s.desc}</p>
+            </SectionReveal>
+          </div>
+        </div>
+      </section>
+
+      <section className="pb-[16vh]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 space-y-8">
+          {services.map((s) => (
+            <SectionReveal key={s.title} delay={0.05}>
+              <div className="bg-card rounded-xl border border-border shadow-corporate p-8 lg:p-12 grid lg:grid-cols-[auto_1fr_1fr] gap-8 items-start">
+                <div className="w-16 h-16 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+                  <s.icon className="w-8 h-8 text-primary" strokeWidth={1.5} />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-foreground mb-2">{s.title}</h3>
+                  <p className="text-muted-foreground leading-relaxed">{s.desc}</p>
+                </div>
+                <ul className="space-y-2">
+                  <li className="text-sm font-semibold text-foreground">{s.benefitsTitle}</li>
+                  {s.benefits.map((b) => (
+                    <li key={b} className="flex items-start gap-2 text-sm text-muted-foreground">
+                      <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0" />
+                      {b}
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <ul className="space-y-2">
-                <li className="text-sm font-semibold text-foreground">{s.benefitsTitle}</li>
-                {s.benefits.map((b) => (
-                  <li key={b} className="flex items-start gap-2 text-sm text-muted-foreground">
-                    <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0" />
-                    {b}
-                  </li>
-                ))}
-              </ul>
+            </SectionReveal>
+          ))}
+        </div>
+      </section>
+
+      <section className="pb-[16vh]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <SectionReveal>
+            <div className="relative overflow-hidden rounded-[2rem] border border-border bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(240,244,255,0.94))] p-4 shadow-corporate lg:p-6">
+              <div className="absolute inset-x-0 top-0 h-24 bg-[radial-gradient(circle_at_top,rgba(59,130,246,0.16),transparent_70%)]" />
+              <div className="relative overflow-hidden rounded-[1.5rem]">
+                <AnimatePresence mode="wait">
+                  <motion.img
+                    key={EVIDENCE_IMAGES[activeEvidenceIndex].src}
+                    src={EVIDENCE_IMAGES[activeEvidenceIndex].src}
+                    alt={EVIDENCE_IMAGES[activeEvidenceIndex].alt}
+                    initial={{ opacity: 0, scale: 1.03 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.985 }}
+                    transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                    className="h-[260px] w-full object-cover sm:h-[360px] lg:h-[520px]"
+                  />
+                </AnimatePresence>
+              </div>
+
+              <div className="relative mt-5 flex justify-center gap-3">
+                {EVIDENCE_IMAGES.map((item, index) => {
+                  const isActive = index === activeEvidenceIndex;
+
+                  return (
+                    <button
+                      key={item.src}
+                      type="button"
+                      onClick={() => setActiveEvidenceIndex(index)}
+                      aria-label={`Mostrar evidencia ${index + 1}`}
+                      className={`h-2.5 rounded-full transition-all duration-300 ${
+                        isActive ? "w-10 bg-primary" : "w-2.5 bg-primary/25 hover:bg-primary/45"
+                      }`}
+                    />
+                  );
+                })}
+              </div>
             </div>
           </SectionReveal>
-        ))}
-      </div>
-    </section>
-  </Layout>
-);
+        </div>
+      </section>
+    </Layout>
+  );
+};
 
 export default SolutionsPage;

@@ -12,6 +12,7 @@ interface SuccessCasesSectionProps {
   items: SuccessCaseItem[];
   autoPlayMs?: number;
   className?: string;
+  sectionId?: string;
 }
 
 const SuccessCasesSection = ({
@@ -20,12 +21,16 @@ const SuccessCasesSection = ({
   items,
   autoPlayMs = 18000,
   className = "",
+  sectionId,
 }: SuccessCasesSectionProps) => {
   if (!items.length) return null;
   const marqueeItems = [...items, ...items];
 
   return (
-    <section className={`relative overflow-hidden bg-[linear-gradient(135deg,#081225_0%,#102344_52%,#14305c_100%)] py-[10vh] lg:py-[12vh] ${className}`}>
+    <section
+      id={sectionId}
+      className={`relative overflow-hidden bg-[linear-gradient(135deg,#081225_0%,#102344_52%,#14305c_100%)] py-[10vh] lg:py-[12vh] ${className}`}
+    >
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(96,165,250,0.18),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(14,165,233,0.14),transparent_30%)]" />
       <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
         <SectionReveal>
