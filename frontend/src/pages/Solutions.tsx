@@ -1,13 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Building2, Users, GraduationCap, Briefcase, Factory, Volume2, VolumeX } from "lucide-react";
+import { Building2, Users, GraduationCap, Briefcase, Factory, Volume2, VolumeX, ArrowRight } from "lucide-react";
 import Layout from "@/components/Layout";
 import SectionReveal from "@/components/SectionReveal";
+import { Button } from "@/components/ui/button";
 import evidenceImage from "@/assets/evidence.jpeg";
 import evidenceImage1 from "@/assets/evidence1.jpeg";
 import evidenceImage2 from "@/assets/evidence2.jpeg";
 
 const HERO_VIDEO_SRC = "/videos/soluciones.mp4";
+const WHATSAPP_URL = "https://wa.me/593992561970";
 const EVIDENCE_IMAGES = [
   { src: evidenceImage, alt: "Evidencia de ejecución de soluciones empresariales 1" },
   { src: evidenceImage1, alt: "Evidencia de ejecución de soluciones empresariales 2" },
@@ -214,6 +216,17 @@ const SolutionsPage = () => {
                     </li>
                   ))}
                 </ul>
+                <div className="lg:col-start-2 lg:col-span-2 flex justify-end self-end">
+                  <Button
+                    asChild
+                    variant="outline"
+                    className="mt-2 inline-flex rounded-lg border-primary/20 bg-primary/5 text-primary hover:border-primary/35 hover:bg-primary/10"
+                  >
+                    <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
+                      Solicitar asesoría <ArrowRight size={16} />
+                    </a>
+                  </Button>
+                </div>
               </div>
             </SectionReveal>
           ))}
