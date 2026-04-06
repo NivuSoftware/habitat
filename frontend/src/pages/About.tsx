@@ -35,7 +35,7 @@ const AboutPage = () => (
             Experiencia, credibilidad y consultoría estratégica.
           </h1>
           <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl">
-            L & M Habitat S.A.S. es una firma de consultoría integral que acompaña a empresas ecuatorianas en su camino hacia la institucionalización y el crecimiento sostenible.
+            Somos tu aliado para integrar las áreas operativas de tu compañía con un crecimiento sostenible
           </p>
         </SectionReveal>
       </div>

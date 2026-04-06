@@ -1,10 +1,28 @@
 import { Link } from "react-router-dom";
-import { Phone, Mail, MapPin } from "lucide-react";
+import { Phone, Mail, MapPin, Instagram, Linkedin, Facebook } from "lucide-react";
+
+const socialLinks = [
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/",
+    icon: Instagram,
+  },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/",
+    icon: Linkedin,
+  },
+  {
+    label: "Facebook",
+    href: "https://www.facebook.com/",
+    icon: Facebook,
+  },
+];
 
 const Footer = () => (
   <footer className="bg-[#0f172a] text-primary-foreground py-16">
     <div className="max-w-7xl mx-auto px-6 lg:px-8">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+      <div className="grid grid-cols-1 gap-12 md:grid-cols-2 xl:grid-cols-4">
         <div>
           <h3 className="font-display font-bold text-xl mb-4">
             L&M <span className="text-primary">HABITAT</span>
@@ -23,7 +41,7 @@ const Footer = () => (
               { label: "Home", path: "/" },
               { label: "Quiénes Somos", path: "/quienes-somos" },
               { label: "Soluciones", path: "/soluciones" },
-              { label: "Trabaje con Nosotros", path: "/trabaje-con-nosotros" },
+              { label: "Bolsa de empleo", path: "/trabaje-con-nosotros" },
               { label: "Contáctenos", path: "/contactenos" },
             ].map((item) => (
               <Link
@@ -51,6 +69,32 @@ const Footer = () => (
             <span className="flex items-start gap-2">
               <MapPin size={14} className="mt-0.5 shrink-0" /> Av. Agustín Freire e Isidro Ayora
             </span>
+          </div>
+        </div>
+
+        <div>
+          <h4 className="font-display font-semibold text-sm uppercase tracking-wider mb-4 text-primary-foreground/80">
+            Síguenos
+          </h4>
+          <div className="flex flex-col gap-3 text-sm text-primary-foreground/60">
+            {socialLinks.map((item) => {
+              const Icon = item.icon;
+
+              return (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-3 transition-colors hover:text-primary-foreground"
+                >
+                  <span className="flex h-9 w-9 items-center justify-center rounded-full border border-primary-foreground/15 bg-primary-foreground/5">
+                    <Icon size={16} />
+                  </span>
+                  <span>Síguenos en {item.label}</span>
+                </a>
+              );
+            })}
           </div>
         </div>
       </div>

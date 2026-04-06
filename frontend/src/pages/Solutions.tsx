@@ -1,37 +1,68 @@
-import { Building2, Users, GraduationCap, Briefcase, Presentation } from "lucide-react";
+import { Building2, Users, GraduationCap, Briefcase, Factory } from "lucide-react";
 import Layout from "@/components/Layout";
 import SectionReveal from "@/components/SectionReveal";
 
 const services = [
   {
     icon: Building2,
-    title: "Administración integral",
-    desc: "Gestión completa de procesos administrativos y organizacionales.",
-    benefits: ["Optimización de flujos de trabajo", "Estructuración de áreas funcionales", "Implementación de políticas internas"],
+    title: "GESTIÓN FINANCIERA Y ADMINISTRATIVA",
+    desc: "Optimización y control de la operación empresarial.",
+    benefitsTitle: "Resolviendo:",
+    benefits: [
+      "Administración y Finanzas",
+      "Desorden administrativo",
+      "Falta de control financiero",
+      "Ineficiencia operativa",
+    ],
   },
   {
     icon: Users,
-    title: "Gestión del talento humano",
-    desc: "Selección, evaluación y desarrollo de capital humano.",
-    benefits: ["Reclutamiento y selección", "Evaluación de desempeño", "Planes de carrera y retención"],
+    title: "GESTIÓN DEL TALENTO HUMANO Y BIENESTAR LABORAL",
+    desc: "Desarrollo, gestión y protección del talento humano.",
+    benefitsTitle: "Resolviendo:",
+    benefits: [
+      "Recursos Humanos y Seguridad y Salud Ocupacional",
+      "Problemas laborales",
+      "Rotación de personal",
+      "Riesgos laborales",
+    ],
+  },
+  {
+    icon: Factory,
+    title: "GESTIÓN OPERATIVA Y EJECUCIÓN DE PROYECTOS",
+    desc: "Ejecución eficiente de operaciones y proyectos.",
+    benefitsTitle: "Resolviendo:",
+    benefits: [
+      "Logística y Construcción",
+      "Fallas en logística",
+      "Retrasos en proyectos",
+      "Mala coordinación operativa",
+    ],
   },
   {
     icon: GraduationCap,
-    title: "Capacitaciones",
-    desc: "Programas formativos para fortalecer competencias organizacionales.",
-    benefits: ["Talleres y seminarios técnicos", "Formación en liderazgo", "Capacitación en normativas SST"],
-  },
-  {
-    icon: Presentation,
-    title: "Conferencias",
-    desc: "Charlas y encuentros especializados para transferir conocimiento y fortalecer visión empresarial.",
-    benefits: ["Ponencias temáticas", "Eventos corporativos", "Actualización estratégica para equipos"],
+    title: "CAPACITACIONES Y CONFERENCIAS",
+    desc: "Programas formativos, charlas y encuentros especializados para fortalecer competencias, actualizar equipos y compartir conocimiento estratégico.",
+    benefitsTitle: "Incluye:",
+    benefits: [
+      "Talleres y seminarios técnicos",
+      "Formación en liderazgo",
+      "Capacitación en normativas SST",
+      "Ponencias temáticas",
+      "Eventos corporativos",
+      "Actualización estratégica para equipos",
+    ],
   },
   {
     icon: Briefcase,
-    title: "Asesorías y consultorías",
+    title: "ASESORÍAS Y CONSULTORÍAS",
     desc: "Consultoría estratégica en finanzas, legal, operaciones y seguridad industrial.",
-    benefits: ["Diagnóstico empresarial", "Planificación estratégica", "Cumplimiento regulatorio"],
+    benefitsTitle: "Incluye:",
+    benefits: [
+      "Diagnóstico empresarial",
+      "Planificación estratégica",
+      "Cumplimiento regulatorio",
+    ],
   },
 ];
 
@@ -53,7 +84,7 @@ const SolutionsPage = () => (
 
     <section className="pb-[16vh]">
       <div className="max-w-7xl mx-auto px-6 lg:px-8 space-y-8">
-        {services.map((s, i) => (
+        {services.map((s) => (
           <SectionReveal key={s.title} delay={0.05}>
             <div className="bg-card rounded-xl border border-border shadow-corporate p-8 lg:p-12 grid lg:grid-cols-[auto_1fr_1fr] gap-8 items-start">
               <div className="w-16 h-16 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
@@ -64,6 +95,7 @@ const SolutionsPage = () => (
                 <p className="text-muted-foreground leading-relaxed">{s.desc}</p>
               </div>
               <ul className="space-y-2">
+                <li className="text-sm font-semibold text-foreground">{s.benefitsTitle}</li>
                 {s.benefits.map((b) => (
                   <li key={b} className="flex items-start gap-2 text-sm text-muted-foreground">
                     <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0" />

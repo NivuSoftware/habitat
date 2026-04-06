@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Phone, Mail, MapPin, MessageCircle } from "lucide-react";
+import { Phone, Mail, MapPin, MessageCircle, Instagram, Linkedin, Facebook } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -8,6 +8,24 @@ import SectionReveal from "@/components/SectionReveal";
 import { useToast } from "@/hooks/use-toast";
 
 const API_URL = `${(import.meta.env.VITE_API_URL || "http://localhost:5000/api").replace(/\/$/, "")}/send-email`;
+
+const socialLinks = [
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/",
+    icon: Instagram,
+  },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/",
+    icon: Linkedin,
+  },
+  {
+    label: "Facebook",
+    href: "https://www.facebook.com/",
+    icon: Facebook,
+  },
+];
 
 const ContactPage = () => {
   const { toast } = useToast();
@@ -169,6 +187,28 @@ const ContactPage = () => {
                     <span className="flex items-start gap-3">
                       <MapPin size={16} className="text-primary mt-0.5" /> Av. Agustín Freire e Isidro Ayora
                     </span>
+                  </div>
+                </div>
+
+                <div>
+                  <h3 className="font-bold text-foreground mb-4">Síguenos en nuestras redes</h3>
+                  <div className="flex flex-wrap gap-3">
+                    {socialLinks.map((item) => {
+                      const Icon = item.icon;
+
+                      return (
+                        <a
+                          key={item.label}
+                          href={item.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`Ir a ${item.label}`}
+                          className="flex h-11 w-11 items-center justify-center rounded-full border border-border bg-card text-muted-foreground shadow-corporate transition-all hover:-translate-y-0.5 hover:text-primary hover:shadow-corporate-lg"
+                        >
+                          <Icon size={18} />
+                        </a>
+                      );
+                    })}
                   </div>
                 </div>
 

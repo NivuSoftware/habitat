@@ -1,10 +1,13 @@
+from pathlib import Path
+
+from dotenv import load_dotenv
 from flask import Flask
 from flask_cors import CORS
 from flask_smorest import Api
-from resources.mail_resource import mail_bp
-from dotenv import load_dotenv
 
-load_dotenv()  # Cargar variables desde .env
+load_dotenv(Path(__file__).with_name(".env"))  # Cargar variables desde .env
+
+from resources.mail_resource import mail_bp
 
 app = Flask(__name__)
 CORS(app)

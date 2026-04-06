@@ -8,15 +8,21 @@ from html import escape
 
 mail_bp = Blueprint("mail", __name__, url_prefix="/api", description="Endpoints para envio de correos")
 
-# SMTP config
-EMAIL_ADDRESS = os.getenv("EMAIL_ADDRESS")
-EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD")
-SMTP_SERVER = os.getenv("SMTP_SERVER", "smtp.gmail.com")
-SMTP_PORT = int(os.getenv("SMTP_PORT", 587))
-MAIL_SENDER = os.getenv("MAIL_SENDER", EMAIL_ADDRESS)
-MAIL_RECIPIENT = os.getenv("MAIL_RECIPIENT", "haylandsebastian5@gmail.com")
-
 SITE_TAGLINE = "Consultoria integral empresarial"
+
+
+def _get_mail_config():
+    email_address = os.getenv("EMAIL_ADDRESS")
+    email_password = os.getenv("EMAIL_PASSWORD")
+
+    return {
+        "email_address": email_address,
+        "email_password": email_password,
+        "smtp_server": os.getenv("SMTP_SERVER", "smtp.gmail.com"),
+        "smtp_port": int(os.getenv("SMTP_PORT", 587)),
+        "mail_sender": os.getenv("MAIL_SENDER", email_address),
+        "mail_recipient": os.getenv("MAIL_RECIPIENT", "haylandsebastian5@gmail.com"),
+    }
 
 
 def _escape_text(value):
@@ -166,14 +172,18 @@ def send_email(data):
 
     empresa_text = empresa or "No especificada"
     telefono_text = telefono or "No especificado"
+    mail_config = _get_mail_config()
 
     current_year = datetime.now().year
 
     try:
+        if not mail_config["email_address"] or not mail_config["email_password"]:
+            abort(500, message="Faltan EMAIL_ADDRESS o EMAIL_PASSWORD en la configuracion del servidor")
+
         msg = EmailMessage()
         msg["Subject"] = f"Nueva consulta web - {nombre}"
-        msg["From"] = MAIL_SENDER
-        msg["To"] = MAIL_RECIPIENT
+        msg["From"] = mail_config["mail_sender"]
+        msg["To"] = mail_config["mail_recipient"]
         msg["Reply-To"] = email
 
         # ----------- PLAIN TEXT -----------
@@ -205,9 +215,9 @@ Notificacion automatica - Web
         )
 
         # ----------- ENVIO DEL CORREO -----------
-        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as smtp:
+        with smtplib.SMTP(mail_config["smtp_server"], mail_config["smtp_port"]) as smtp:
             smtp.starttls()
-            smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
+            smtp.login(mail_config["email_address"], mail_config["email_password"])
             smtp.send_message(msg)
 
         return {"success": True, "message": "Correo enviado correctamente"}

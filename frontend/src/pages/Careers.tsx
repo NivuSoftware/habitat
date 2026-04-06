@@ -21,12 +21,12 @@ const CareersPage = () => {
       <section className="pt-32 pb-[16vh]">
         <div className="max-w-3xl mx-auto px-6 lg:px-8">
           <SectionReveal>
-            <p className="text-sm font-semibold text-primary uppercase tracking-wider mb-3">Trabaje con Nosotros</p>
+            <p className="text-sm font-semibold text-primary uppercase tracking-wider mb-3">Encuentra nuevas oportunidades laborales.</p>
             <h1 className="text-hero font-bold text-foreground leading-[1.1] mb-6">
               Bolsa de Empleo.
             </h1>
             <p className="text-lg text-muted-foreground leading-relaxed mb-12">
-              Postulate! L&M Habitat tiene una bolsa de empleo activa para profesionales apasionados por la consultoría empresarial. 
+              Postulate! En L&M Habitat conectamos tu talento con empresas que buscan profesionales como tú. Postúlate y nosotros te ayudamos a encontrar el trabajo ideal.
             </p>
           </SectionReveal>
 

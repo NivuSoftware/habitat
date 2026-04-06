@@ -8,29 +8,75 @@ import {
 import { Button } from "@/components/ui/button";
 import Layout from "@/components/Layout";
 import SectionReveal from "@/components/SectionReveal";
+import SuccessCasesSection from "@/components/SuccessCasesSection";
 import skyImage from "@/assets/sky.png";
 import buildingImage from "@/assets/building.png";
 import solutionsBgImage from "@/assets/bg.jpg";
 
 const services = [
-  { icon: Building2, title: "Administración integral", desc: "Gestión completa de procesos administrativos y organizacionales para empresas en crecimiento." },
-  { icon: Users, title: "Gestión del talento humano", desc: "Optimización del capital humano, selección, evaluación y desarrollo de competencias." },
-  { icon: GraduationCap, title: "Capacitaciones", desc: "Programas formativos especializados para fortalecer equipos y elevar competencias clave." },
-  { icon: Presentation, title: "Conferencias", desc: "Espacios de alto impacto para compartir conocimiento, visión estratégica y actualización profesional." },
-  { icon: Briefcase, title: "Asesorías y consultorías", desc: "Consultoría estratégica en finanzas, legal, operaciones y seguridad industrial." },
+  {
+    icon: Building2,
+    title: "Gestión financiera y administrativa",
+    includes: "Administración y Finanzas",
+    summary: "Optimización y control de la operación empresarial.",
+    resolves: [
+      "Desorden administrativo",
+      "Falta de control financiero",
+      "Ineficiencia operativa",
+    ],
+  },
+  {
+    icon: Users,
+    title: "Gestión del talento humano y bienestar laboral",
+    includes: "Recursos Humanos y Seguridad y Salud Ocupacional",
+    summary: "Desarrollo, gestión y protección del talento humano.",
+    resolves: [
+      "Problemas laborales",
+      "Rotación de personal",
+      "Riesgos laborales",
+    ],
+  },
+  {
+    icon: Factory,
+    title: "Gestión operativa y ejecución de proyectos",
+    includes: "Logística y Construcción",
+    summary: "Ejecución eficiente de operaciones y proyectos.",
+    resolves: [
+      "Fallas en logística",
+      "Retrasos en proyectos",
+      "Mala coordinación operativa",
+    ],
+  },
+  {
+    icon: GraduationCap,
+    title: "Capacitaciones y conferencias",
+    summary: "Espacios formativos y de actualización para fortalecer competencias técnicas, operativas y estratégicas.",
+  },
+  {
+    icon: Briefcase,
+    title: "Asesorías y consultorías",
+    summary: "Acompañamiento especializado para mejorar procesos, tomar decisiones y resolver retos clave del negocio.",
+  },
 ];
 
 const values = [
-  { icon: Award, title: "Profesionales con experiencia y liderazgo", desc: "Equipo multidisciplinario con trayectoria comprobada en el sector empresarial e industrial." },
-  { icon: Target, title: "Gestión orientada a resultados", desc: "Metodologías enfocadas en indicadores medibles y mejora continua de procesos." },
-  { icon: ShieldCheck, title: "Cumplimiento de normativas", desc: "Estricto apego a regulaciones y procesos empresariales vigentes en Ecuador." },
+  { icon: Award, title: "Profesionales con experiencia y liderazgo", desc: "Gestionamos cada proceso conforme a la normativa vigente, para que puedas operar con total confianza y seguridad." },
+  { icon: Target, title: "Gestión orientada a resultados", desc: "Gestionamos cada proceso conforme a la normativa vigente, para que puedas operar con total confianza y seguridad." },
+  { icon: ShieldCheck, title: "Cumplimiento de normativas", desc: "Gestionamos cada proceso conforme a la normativa vigente, para que puedas operar con total confianza y seguridad." },
 ];
 
 const clients = [
-  { icon: Rocket, label: "Micro y Pequeñas empresas" },
-  { icon: Store, label: "Medianas empresas" },
-  { icon: Factory, label: "PyMes Medianas empresas" },
   { icon: HomeIcon, label: "Empresas familiares" },
+  { icon: Rocket, label: "Micro y Pequeñas empresas" },
+  { icon: Factory, label: "Empresas Pymes" },
+  
+];
+
+const successCases = [
+  { src: "/images/success_case/LOS-PORTEONES-NEGRO.png", alt: "Logo de Los Porteones Negro" },
+  { src: "/images/success_case/agrocorrectores.png", alt: "Logo de Agrocorrectores" },
+  { src: "/images/success_case/red-barn-logo.png", alt: "Logo de Red Barn" },
+  { src: "/images/success_case/tropical.jpeg", alt: "Logo de Tropical" },
 ];
 
 const HomePage = () => {
@@ -84,9 +130,7 @@ const HomePage = () => {
                     opacity: textOpacity,
                   }}
                 >
-                  <p className="mb-4 text-xs md:text-sm font-semibold uppercase tracking-[0.24em] md:tracking-[0.28em] text-primary">
-                    Consultoría integral empresarial
-                  </p>
+                  
                   <h1 className="text-[clamp(2rem,10vw,3.8rem)] md:text-[clamp(2.4rem,9vw,5.5rem)] font-bold text-white leading-[0.98] md:leading-[1.02]">
                     Proyectamos tu negocio al nivel empresarial.
                   </h1>
@@ -107,11 +151,11 @@ const HomePage = () => {
                     style={{ opacity: frontOverlayOpacity }}
                   />
                   <p className="relative text-white md:text-lg text-white/88 leading-relaxed mb-6 md:mb-10">
-                    Estructura, control y crecimiento sostenible para empresas que necesitan operar con mayor claridad y dirección.
+                    Soluciones integrales para optimizar y hacer crecer tu empresa
                   </p>
                   <div className="relative flex flex-col sm:flex-row gap-3 md:gap-4">
                     <Button asChild size="lg" className="rounded-lg text-sm font-semibold px-8 w-full sm:w-auto">
-                      <Link to="/contactenos">Solicita tu análisis</Link>
+                      <Link to="/contactenos">Solicita asesoría</Link>
                     </Button>
                     <Button
                       asChild
@@ -119,7 +163,7 @@ const HomePage = () => {
                       size="lg"
                       className="rounded-lg text-sm font-semibold px-8 w-full sm:w-auto border-white/30 bg-white/8 text-white hover:bg-white/16 hover:text-white"
                     >
-                      <Link to="/soluciones">Conocer soluciones</Link>
+                      <Link to="/soluciones">Ver casos de éxito</Link>
                     </Button>
                   </div>
                 </motion.div>
@@ -146,24 +190,30 @@ const HomePage = () => {
       <section className="py-[12vh] lg:py-[16vh]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <SectionReveal>
-            <p className="text-sm font-semibold text-primary uppercase tracking-wider mb-3">Por qué elegirnos</p>
+            <p className="text-4xl font-semibold text-primary uppercase tracking-wider mb-3">Por qué elegirnos</p>
             <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-12">
-              Consultoría que transforma la estructura en resultados.
+              Te ayudamos en la operación de tu empresa
             </h2>
           </SectionReveal>
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid items-stretch gap-8 md:grid-cols-3">
             {values.map((v, i) => (
-              <SectionReveal key={v.title} delay={i * 0.1}>
-                <div className="p-8 bg-card rounded-xl border border-border shadow-corporate hover:shadow-corporate-lg transition-all duration-300 group">
-                  <v.icon className="w-10 h-10 text-primary mb-6 transition-transform duration-300 group-hover:scale-110" strokeWidth={1.5} />
-                  <h3 className="text-lg font-bold text-foreground mb-3">{v.title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{v.desc}</p>
+              <SectionReveal key={v.title} delay={i * 0.1} className="h-full">
+                <div className="flex h-full flex-col items-center rounded-xl border border-border bg-card p-8 text-center shadow-corporate transition-all duration-300 group hover:shadow-corporate-lg">
+                  <v.icon className="mb-6 h-10 w-10 text-primary transition-transform duration-300 group-hover:scale-110" strokeWidth={1.5} />
+                  <h3 className="mb-3 min-h-[3.5rem] text-lg font-bold text-foreground">{v.title}</h3>
+                  <p className="text-sm leading-relaxed text-muted-foreground">{v.desc}</p>
                 </div>
               </SectionReveal>
             ))}
           </div>
         </div>
       </section>
+
+      <SuccessCasesSection
+        title="Casos de éxito"
+        subtitle="Ellos ya confían en nuestros servicios"
+        items={successCases}
+      />
 
       {/* Services Preview */}
       <section
@@ -173,22 +223,37 @@ const HomePage = () => {
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(248,250,252,0.72),rgba(248,250,252,0.58),rgba(248,250,252,0.72))]" />
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
           <SectionReveal>
-            <p className="text-sm font-semibold text-primary uppercase tracking-wider mb-3">Nuestras soluciones</p>
+            <p className="text-4xl font-semibold text-primary uppercase tracking-wider mb-3">Nuestras soluciones</p>
             <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-12">
-              Servicios especializados para tu empresa.
+              Gestionamos integralmente la operación de tu empresa.
             </h2>
           </SectionReveal>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((s, i) => (
-              <SectionReveal key={s.title} delay={i * 0.08}>
+              <SectionReveal key={s.title} delay={i * 0.08} className="h-full">
                 <motion.div
                   whileHover={{ y: -5 }}
-                  className="p-8 rounded-xl border border-white bg-white shadow-corporate hover:border-primary/30 hover:shadow-corporate-lg transition-all duration-300"
+                  className="flex h-full flex-col rounded-xl border border-white bg-white p-8 shadow-corporate transition-all duration-300 hover:border-primary/30 hover:shadow-corporate-lg"
                 >
                   <s.icon className="w-10 h-10 text-primary mb-6" strokeWidth={1.5} />
                   <h3 className="text-lg font-bold text-foreground mb-3">{s.title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed mb-4">{s.desc}</p>
-                  <Link to="/soluciones" className="text-sm font-semibold text-primary hover:text-accent transition-colors">
+                  {s.includes && (
+                    <p className="mb-3 text-sm leading-relaxed text-muted-foreground">
+                      <span className="font-semibold text-foreground">Incluye:</span> {s.includes}
+                    </p>
+                  )}
+                  {s.summary && (
+                    <p className="mb-3 text-sm leading-relaxed text-muted-foreground">
+                      <span className="font-semibold text-foreground">Qué hacemos:</span> {s.summary}
+                    </p>
+                  )}
+                  {s.resolves && (
+                    <p className="mb-5 text-sm leading-relaxed text-muted-foreground">
+                      <span className="font-semibold text-foreground">Resolviendo:</span> {s.resolves.join(", ")}
+                    </p>
+                  )}
+                  {!s.resolves && s.summary && <div className="mb-5" />}
+                  <Link to="/soluciones" className="mt-auto text-sm font-semibold text-primary transition-colors hover:text-accent">
                     Explorar Solución →
                   </Link>
                 </motion.div>
