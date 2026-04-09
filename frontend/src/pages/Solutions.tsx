@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Building2, Users, GraduationCap, Briefcase, Factory, Volume2, VolumeX, ArrowRight } from "lucide-react";
+import { Building2, Users, GraduationCap, Briefcase, Factory, Volume2, VolumeX, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import Layout from "@/components/Layout";
 import Seo from "@/components/Seo";
 import SectionReveal from "@/components/SectionReveal";
@@ -8,6 +8,12 @@ import { Button } from "@/components/ui/button";
 import evidenceImage from "@/assets/evidence.jpeg";
 import evidenceImage1 from "@/assets/evidence1.jpeg";
 import evidenceImage2 from "@/assets/evidence2.jpeg";
+import evidenceImage3 from "@/assets/evidence3.jpeg";
+import evidenceImage4 from "@/assets/evidence4.jpeg";
+import evidenceImage5 from "@/assets/evidence5.jpeg";
+import evidenceImage6 from "@/assets/evidence6.jpeg";
+import evidenceImage7 from "@/assets/evidence7.jpeg";
+import evidenceImage8 from "@/assets/evidence8.jpeg";
 import { DEFAULT_KEYWORDS, buildWebPageSchema } from "@/lib/seo";
 
 const HERO_VIDEO_SRC = "/videos/soluciones.mp4";
@@ -16,6 +22,12 @@ const EVIDENCE_IMAGES = [
   { src: evidenceImage, alt: "Evidencia de ejecución de soluciones empresariales 1" },
   { src: evidenceImage1, alt: "Evidencia de ejecución de soluciones empresariales 2" },
   { src: evidenceImage2, alt: "Evidencia de ejecución de soluciones empresariales 3" },
+  { src: evidenceImage3, alt: "Evidencia de ejecución de soluciones empresariales 4" },
+  { src: evidenceImage4, alt: "Evidencia de ejecución de soluciones empresariales 5" },
+  { src: evidenceImage5, alt: "Evidencia de ejecución de soluciones empresariales 6" },
+  { src: evidenceImage6, alt: "Evidencia de ejecución de soluciones empresariales 7" },
+  { src: evidenceImage7, alt: "Evidencia de ejecución de soluciones empresariales 8" },
+  { src: evidenceImage8, alt: "Evidencia de ejecución de soluciones empresariales 9" },
 ];
 
 const services = [
@@ -81,6 +93,7 @@ const SolutionsPage = () => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [isMuted, setIsMuted] = useState(true);
   const [activeEvidenceIndex, setActiveEvidenceIndex] = useState(0);
+  const evidenceCount = EVIDENCE_IMAGES.length;
 
   useEffect(() => {
     const video = videoRef.current;
@@ -123,12 +136,22 @@ const SolutionsPage = () => {
   }, [isMuted]);
 
   useEffect(() => {
-    const intervalId = window.setInterval(() => {
-      setActiveEvidenceIndex((currentIndex) => (currentIndex + 1) % EVIDENCE_IMAGES.length);
+    const timeoutId = window.setTimeout(() => {
+      setActiveEvidenceIndex((currentIndex) =>
+        currentIndex >= evidenceCount - 1 ? 0 : currentIndex + 1,
+      );
     }, 3200);
 
-    return () => window.clearInterval(intervalId);
-  }, []);
+    return () => window.clearTimeout(timeoutId);
+  }, [activeEvidenceIndex, evidenceCount]);
+
+  const handlePreviousEvidence = () => {
+    setActiveEvidenceIndex((currentIndex) => (currentIndex - 1 + evidenceCount) % evidenceCount);
+  };
+
+  const handleNextEvidence = () => {
+    setActiveEvidenceIndex((currentIndex) => (currentIndex + 1) % evidenceCount);
+  };
 
   const handleToggleMuted = () => {
     const video = videoRef.current;
@@ -265,9 +288,28 @@ const SolutionsPage = () => {
                     className="h-[260px] w-full object-cover sm:h-[360px] lg:h-[520px]"
                   />
                 </AnimatePresence>
+
+                <div className="pointer-events-none absolute inset-y-0 left-0 right-0 flex items-center justify-between px-3">
+                  <button
+                    type="button"
+                    onClick={handlePreviousEvidence}
+                    aria-label="Mostrar evidencia anterior"
+                    className="pointer-events-auto inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/35 bg-[#081225]/75 text-white backdrop-blur transition-colors hover:bg-[#102344]"
+                  >
+                    <ChevronLeft size={18} />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleNextEvidence}
+                    aria-label="Mostrar siguiente evidencia"
+                    className="pointer-events-auto inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/35 bg-[#081225]/75 text-white backdrop-blur transition-colors hover:bg-[#102344]"
+                  >
+                    <ChevronRight size={18} />
+                  </button>
+                </div>
               </div>
 
-              <div className="relative mt-5 flex justify-center gap-3">
+              <div className="relative mt-5 flex flex-wrap justify-center gap-3">
                 {EVIDENCE_IMAGES.map((item, index) => {
                   const isActive = index === activeEvidenceIndex;
 
