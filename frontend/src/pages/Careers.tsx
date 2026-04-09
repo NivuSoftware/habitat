@@ -4,8 +4,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import Layout from "@/components/Layout";
+import Seo from "@/components/Seo";
 import SectionReveal from "@/components/SectionReveal";
 import { useToast } from "@/hooks/use-toast";
+import { DEFAULT_KEYWORDS, buildWebPageSchema } from "@/lib/seo";
 
 const CareersPage = () => {
   const { toast } = useToast();
@@ -18,6 +20,19 @@ const CareersPage = () => {
 
   return (
     <Layout>
+      <Seo
+        title="Bolsa de empleo"
+        description="Postúlate a oportunidades laborales con L&M Habitat y conecta tu talento con empresas que buscan profesionales en distintas áreas."
+        path="/trabaje-con-nosotros"
+        keywords={[...DEFAULT_KEYWORDS, "bolsa de empleo", "trabaje con nosotros", "empleos en Ecuador", "postulación laboral"]}
+        schema={buildWebPageSchema({
+          path: "/trabaje-con-nosotros",
+          name: "Bolsa de empleo",
+          description:
+            "Conectamos talento con empresas que buscan profesionales y perfiles estratégicos para crecer.",
+          type: "CollectionPage",
+        })}
+      />
       <section className="pt-32 pb-[16vh]">
         <div className="max-w-3xl mx-auto px-6 lg:px-8">
           <SectionReveal>

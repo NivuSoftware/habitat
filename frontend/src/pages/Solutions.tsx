@@ -2,11 +2,13 @@ import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Building2, Users, GraduationCap, Briefcase, Factory, Volume2, VolumeX, ArrowRight } from "lucide-react";
 import Layout from "@/components/Layout";
+import Seo from "@/components/Seo";
 import SectionReveal from "@/components/SectionReveal";
 import { Button } from "@/components/ui/button";
 import evidenceImage from "@/assets/evidence.jpeg";
 import evidenceImage1 from "@/assets/evidence1.jpeg";
 import evidenceImage2 from "@/assets/evidence2.jpeg";
+import { DEFAULT_KEYWORDS, buildWebPageSchema } from "@/lib/seo";
 
 const HERO_VIDEO_SRC = "/videos/soluciones.mp4";
 const WHATSAPP_URL = "https://wa.me/593992561970";
@@ -21,7 +23,6 @@ const services = [
     icon: Building2,
     title: "GESTIÓN FINANCIERA Y ADMINISTRATIVA",
     desc: "Optimización y control de la operación empresarial.",
-    benefitsTitle: "Resolviendo:",
     benefits: [
       "Administración y Finanzas",
       "Desorden administrativo",
@@ -33,7 +34,6 @@ const services = [
     icon: Users,
     title: "GESTIÓN DEL TALENTO HUMANO Y BIENESTAR LABORAL",
     desc: "Desarrollo, gestión y protección del talento humano.",
-    benefitsTitle: "Resolviendo:",
     benefits: [
       "Recursos Humanos y Seguridad y Salud Ocupacional",
       "Problemas laborales",
@@ -45,7 +45,6 @@ const services = [
     icon: Factory,
     title: "GESTIÓN OPERATIVA Y EJECUCIÓN DE PROYECTOS",
     desc: "Ejecución eficiente de operaciones y proyectos.",
-    benefitsTitle: "Resolviendo:",
     benefits: [
       "Logística y Construcción",
       "Fallas en logística",
@@ -57,7 +56,6 @@ const services = [
     icon: GraduationCap,
     title: "CAPACITACIONES Y CONFERENCIAS",
     desc: "Programas formativos, charlas y encuentros especializados para fortalecer competencias, actualizar equipos y compartir conocimiento estratégico.",
-    benefitsTitle: "Incluye:",
     benefits: [
       "Talleres y seminarios técnicos",
       "Formación en liderazgo",
@@ -71,7 +69,6 @@ const services = [
     icon: Briefcase,
     title: "ASESORÍAS Y CONSULTORÍAS",
     desc: "Consultoría estratégica en finanzas, legal, operaciones y seguridad industrial.",
-    benefitsTitle: "Incluye:",
     benefits: [
       "Diagnóstico empresarial",
       "Planificación estratégica",
@@ -150,6 +147,24 @@ const SolutionsPage = () => {
 
   return (
     <Layout>
+      <Seo
+        title="Soluciones empresariales"
+        description="Servicios de gestión financiera, administrativa, talento humano, logística, construcción, capacitaciones y consultoría estratégica para empresas."
+        path="/soluciones"
+        keywords={[
+          ...DEFAULT_KEYWORDS,
+          "soluciones empresariales",
+          "gestión operativa",
+          "consultoría financiera",
+          "capacitaciones corporativas",
+        ]}
+        schema={buildWebPageSchema({
+          path: "/soluciones",
+          name: "Soluciones empresariales",
+          description:
+            "Servicios diseñados para escalar tu empresa con ejecución operativa, asesoría estratégica y formación especializada.",
+        })}
+      />
       <section className="overflow-hidden pt-32 pb-[12vh]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1.15fr)_minmax(300px,380px)] lg:gap-16">
@@ -208,7 +223,6 @@ const SolutionsPage = () => {
                   <p className="text-muted-foreground leading-relaxed">{s.desc}</p>
                 </div>
                 <ul className="space-y-2">
-                  <li className="text-sm font-semibold text-foreground">{s.benefitsTitle}</li>
                   {s.benefits.map((b) => (
                     <li key={b} className="flex items-start gap-2 text-sm text-muted-foreground">
                       <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0" />

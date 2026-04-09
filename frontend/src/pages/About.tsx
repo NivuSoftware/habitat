@@ -1,8 +1,10 @@
 import { Eye, Target, Heart, Shield, Lightbulb, Handshake } from "lucide-react";
 import { motion } from "framer-motion";
 import Layout from "@/components/Layout";
+import Seo from "@/components/Seo";
 import SectionReveal from "@/components/SectionReveal";
 import josefinaImage from "@/assets/josefina.png";
+import { DEFAULT_KEYWORDS, buildWebPageSchema } from "@/lib/seo";
 
 const timeline = [
   {
@@ -26,6 +28,19 @@ const coreValues = [
 
 const AboutPage = () => (
   <Layout>
+    <Seo
+      title="Quiénes somos"
+      description="Conoce la misión, visión y valores de L&M Habitat, una firma enfocada en institucionalizar operaciones y acompañar el crecimiento empresarial en Ecuador."
+      path="/quienes-somos"
+      keywords={[...DEFAULT_KEYWORDS, "quiénes somos", "misión empresarial", "visión empresarial", "valores corporativos"]}
+      schema={buildWebPageSchema({
+        path: "/quienes-somos",
+        name: "Quiénes somos",
+        description:
+          "Experiencia, credibilidad y consultoría estratégica para empresas que buscan estructura, cumplimiento y crecimiento sostenible.",
+        type: "AboutPage",
+      })}
+    />
     {/* Hero */}
     <section className="pt-32 pb-[12vh] lg:pb-[16vh]">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">

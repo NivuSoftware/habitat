@@ -4,8 +4,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import Layout from "@/components/Layout";
+import Seo from "@/components/Seo";
 import SectionReveal from "@/components/SectionReveal";
 import { useToast } from "@/hooks/use-toast";
+import { DEFAULT_KEYWORDS, ORGANIZATION_SCHEMA, buildWebPageSchema } from "@/lib/seo";
 
 const API_URL = `${(import.meta.env.VITE_API_URL || "http://localhost:5000/api").replace(/\/$/, "")}/send-email`;
 
@@ -103,6 +105,22 @@ const ContactPage = () => {
 
   return (
     <Layout>
+      <Seo
+        title="Contáctenos"
+        description="Solicita un análisis empresarial y contacta a L&M Habitat por formulario, correo o WhatsApp para recibir asesoría profesional."
+        path="/contactenos"
+        keywords={[...DEFAULT_KEYWORDS, "contacto", "análisis empresarial", "asesoría por WhatsApp", "consultoría en Ecuador"]}
+        schema={[
+          ORGANIZATION_SCHEMA,
+          buildWebPageSchema({
+            path: "/contactenos",
+            name: "Contáctenos",
+            description:
+              "Solicita tu análisis empresarial y recibe acompañamiento profesional para optimizar la operación de tu empresa.",
+            type: "ContactPage",
+          }),
+        ]}
+      />
       <section className="pt-32 pb-[16vh]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <SectionReveal>
@@ -179,7 +197,7 @@ const ContactPage = () => {
                   <h3 className="font-bold text-foreground mb-4">Información de contacto</h3>
                   <div className="space-y-4 text-sm text-muted-foreground">
                     <a href="https://wa.me/593992561970" className="flex items-center gap-3 hover:text-foreground transition-colors">
-                      <Phone size={16} className="text-primary" /> <span className="tabular-nums">099 256 1970</span>
+                      <Phone size={16} className="text-primary" /> <span className="tabular-nums">+593 99 256 1970</span>
                     </a>
                     <a href="mailto:info@habitatempresarial.com" className="flex items-center gap-3 hover:text-foreground transition-colors">
                       <Mail size={16} className="text-primary" /> info@habitatempresarial.com

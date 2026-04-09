@@ -7,61 +7,56 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Layout from "@/components/Layout";
+import Seo from "@/components/Seo";
 import SectionReveal from "@/components/SectionReveal";
 import SuccessCasesSection from "@/components/SuccessCasesSection";
 import skyImage from "@/assets/sky.png";
 import buildingImage from "@/assets/building.png";
 import solutionsBgImage from "@/assets/bg.jpg";
+import {
+  DEFAULT_KEYWORDS,
+  ORGANIZATION_SCHEMA,
+  SITE_NAME,
+  SITE_URL,
+  buildWebPageSchema,
+} from "@/lib/seo";
 
 const services = [
   {
     icon: Building2,
     title: "Gestión financiera y administrativa",
-    includes: "Administración y Finanzas",
-    summary: "Optimización y control de la operación empresarial.",
-    resolves: [
-      "Desorden administrativo",
-      "Falta de control financiero",
-      "Ineficiencia operativa",
-    ],
+    description:
+      "Fortalecemos la administración y las finanzas de tu empresa con una gestión más ordenada, mayor control operativo y herramientas que ayudan a reducir ineficiencias y mejorar la toma de decisiones.",
   },
   {
     icon: Users,
     title: "Gestión del talento humano y bienestar laboral",
-    includes: "Recursos Humanos y Seguridad y Salud Ocupacional",
-    summary: "Desarrollo, gestión y protección del talento humano.",
-    resolves: [
-      "Problemas laborales",
-      "Rotación de personal",
-      "Riesgos laborales",
-    ],
+    description:
+      "Impulsamos el desarrollo, la gestión y la protección del talento humano mediante procesos que favorecen el bienestar laboral, disminuyen la rotación y ayudan a prevenir riesgos dentro de la organización.",
   },
   {
     icon: Factory,
     title: "Gestión operativa y ejecución de proyectos",
-    includes: "Logística y Construcción",
-    summary: "Ejecución eficiente de operaciones y proyectos.",
-    resolves: [
-      "Fallas en logística",
-      "Retrasos en proyectos",
-      "Mala coordinación operativa",
-    ],
+    description:
+      "Optimizamos la logística, la coordinación operativa y la ejecución de proyectos para que tu empresa trabaje con mayor fluidez, menos retrasos y una mejor articulación entre equipos y procesos.",
   },
   {
     icon: GraduationCap,
     title: "Capacitaciones y conferencias",
-    summary: "Espacios formativos y de actualización para fortalecer competencias técnicas, operativas y estratégicas.",
+    description:
+      "Diseñamos espacios formativos y de actualización que fortalecen competencias técnicas, operativas y estratégicas, ayudando a los equipos a responder mejor a los desafíos del entorno empresarial.",
   },
   {
     icon: Briefcase,
     title: "Asesorías y consultorías",
-    summary: "Acompañamiento especializado para mejorar procesos, tomar decisiones y resolver retos clave del negocio.",
+    description:
+      "Brindamos acompañamiento especializado para mejorar procesos, tomar decisiones con mayor claridad y resolver retos clave del negocio con una visión práctica, estratégica y orientada a resultados.",
   },
 ];
 
 const values = [
-  { icon: Award, title: "Profesionales con experiencia y liderazgo", desc: "Gestionamos cada proceso conforme a la normativa vigente, para que puedas operar con total confianza y seguridad." },
-  { icon: Target, title: "Gestión orientada a resultados", desc: "Gestionamos cada proceso conforme a la normativa vigente, para que puedas operar con total confianza y seguridad." },
+  { icon: Award, title: "Profesionales con experiencia y liderazgo", desc: "Equipo multidisciplinario con trayectoria comprobada en el sector empresarial e industrial" },
+  { icon: Target, title: "Gestión orientada a resultados", desc: "Metodologías enfocadas en indicadores medibles y mejora continua de procesos." },
   { icon: ShieldCheck, title: "Cumplimiento de normativas", desc: "Gestionamos cada proceso conforme a la normativa vigente, para que puedas operar con total confianza y seguridad." },
 ];
 
@@ -111,6 +106,34 @@ const HomePage = () => {
 
   return (
     <Layout>
+      <Seo
+        title="Consultoría empresarial integral"
+        description="Impulsamos el crecimiento de tu empresa con soluciones en finanzas, administración, talento humano, logística, construcción y seguridad ocupacional."
+        path="/"
+        keywords={[
+          ...DEFAULT_KEYWORDS,
+          "consultoría estratégica",
+          "crecimiento empresarial",
+          "seguridad industrial",
+          "casos de éxito",
+        ]}
+        schema={[
+          {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            name: SITE_NAME,
+            url: SITE_URL,
+            inLanguage: "es",
+          },
+          ORGANIZATION_SCHEMA,
+          buildWebPageSchema({
+            path: "/",
+            name: "Consultoría empresarial integral",
+            description:
+              "Soluciones integrales para optimizar y hacer crecer tu empresa en áreas administrativas, financieras, operativas y de talento humano.",
+          }),
+        ]}
+      />
       {/* Hero */}
       <section ref={heroRef} className="relative h-[138vh] md:h-[180vh]">
         <div className="sticky top-0 h-screen overflow-hidden relative">
@@ -252,22 +275,9 @@ const HomePage = () => {
                 >
                   <s.icon className="w-10 h-10 text-primary mb-6" strokeWidth={1.5} />
                   <h3 className="text-lg font-bold text-foreground mb-3">{s.title}</h3>
-                  {s.includes && (
-                    <p className="mb-3 text-sm leading-relaxed text-muted-foreground">
-                      <span className="font-semibold text-foreground">Incluye:</span> {s.includes}
-                    </p>
-                  )}
-                  {s.summary && (
-                    <p className="mb-3 text-sm leading-relaxed text-muted-foreground">
-                      <span className="font-semibold text-foreground">Qué hacemos:</span> {s.summary}
-                    </p>
-                  )}
-                  {s.resolves && (
-                    <p className="mb-5 text-sm leading-relaxed text-muted-foreground">
-                      <span className="font-semibold text-foreground">Resolviendo:</span> {s.resolves.join(", ")}
-                    </p>
-                  )}
-                  {!s.resolves && s.summary && <div className="mb-5" />}
+                  <p className="mb-5 text-sm leading-relaxed text-muted-foreground">
+                    {s.description}
+                  </p>
                   <Link to="/soluciones" className="mt-auto text-sm font-semibold text-primary transition-colors hover:text-accent">
                     Explorar Solución →
                   </Link>

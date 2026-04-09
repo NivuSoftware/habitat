@@ -43,24 +43,24 @@ const SuccessCasesSection = ({
         </SectionReveal>
 
         <SectionReveal delay={0.1}>
-          <div className="relative overflow-hidden rounded-[1.75rem] border border-white/10 bg-white/6 py-6 shadow-[0_24px_60px_rgba(8,18,37,0.35)] backdrop-blur-sm">
+          <div className="relative overflow-hidden py-4 md:py-6">
             <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 bg-gradient-to-r from-[#081225] via-[#081225]/70 to-transparent md:w-24" />
             <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 bg-gradient-to-l from-[#14305c] via-[#14305c]/70 to-transparent md:w-24" />
 
             <motion.div
-              className="flex w-max gap-4 px-2 md:gap-6"
+              className="flex w-max gap-5 px-2 md:gap-7"
               animate={{ x: ["0%", "-50%"] }}
               transition={{ duration: autoPlayMs / 1000, ease: "linear", repeat: Infinity }}
             >
               {marqueeItems.map((item, index) => (
                 <div
                   key={`${item.src}-${index}`}
-                  className="flex h-28 w-40 shrink-0 items-center justify-center rounded-[1.4rem] border border-border/50 bg-white px-5 shadow-[0_16px_40px_rgba(15,23,42,0.08)] sm:h-32 sm:w-48 md:h-36 md:w-56"
+                  className="flex h-32 w-44 shrink-0 items-center justify-center rounded-[1.4rem] border border-border/50 bg-white px-6 shadow-[0_16px_40px_rgba(15,23,42,0.08)] sm:h-36 sm:w-52 md:h-40 md:w-60"
                 >
                   <img
                     src={item.src}
                     alt={item.alt}
-                    className="max-h-14 w-full object-contain sm:max-h-16 md:max-h-20"
+                    className="max-h-16 w-full object-contain sm:max-h-20 md:max-h-24"
                   />
                 </div>
               ))}

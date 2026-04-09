@@ -61,7 +61,7 @@ const Footer = () => (
           </h4>
           <div className="flex flex-col gap-3 text-sm text-primary-foreground/60">
             <a href="https://wa.me/593992561970" className="flex items-center gap-2 hover:text-primary-foreground transition-colors">
-              <Phone size={14} /> <span className="tabular-nums">+593 099 256 1970</span>
+              <Phone size={14} /> <span className="tabular-nums">+593 99 256 1970</span>
             </a>
             <a href="mailto:info@habitatempresarial.com" className="flex items-center gap-2 hover:text-primary-foreground transition-colors">
               <Mail size={14} /> info@habitatempresarial.com
