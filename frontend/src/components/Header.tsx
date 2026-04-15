@@ -13,6 +13,8 @@ const navItems = [
   { label: "Contáctenos", path: "/contactenos" },
 ];
 
+const WHATSAPP_URL = "https://wa.me/593992561970";
+
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -149,7 +151,9 @@ const Header = () => {
                     </nav>
 
                     <Button asChild size="lg" className="mt-6 rounded-2xl">
-                      <Link to="/contactenos">Solicita tu análisis</Link>
+                      <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
+                        Solicita tu análisis
+                      </a>
                     </Button>
                   </div>
                 </motion.div>
@@ -190,7 +194,9 @@ const Header = () => {
               </Link>
             ))}
             <Button asChild size="sm" className="rounded-lg">
-              <Link to="/contactenos">Solicita tu análisis</Link>
+              <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
+                Solicita tu análisis
+              </a>
             </Button>
           </nav>
 

@@ -33,6 +33,7 @@ services:
       - CHOKIDAR_USEPOLLING=true
       - CHOKIDAR_INTERVAL=100
       - WATCHPACK_POLLING=true
+      - VITE_API_PROXY_TARGET=http://backend:5000
     command:
       [
         "sh",
